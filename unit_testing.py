@@ -9,7 +9,12 @@ from chess_question import bishop_moves
 from chess_question import knight_moves
 from chess_question import pawn_moves
 from chess_question import prettify_board
-from chess_question import main as test_main
+#from chess_question import main as test_main
+
+def main():
+    test_board_update()
+    test_free_space()
+    test_not_a_free_space()
 
 #############
 # get_piece #
@@ -42,14 +47,68 @@ from chess_question import main as test_main
 ####################
 
 # not a free space
+def test_not_a_free_space():
+    board = [
+        ["X","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+    ]
+
+    assert not check_free_space(board, [0,0])
+
 
 # free space
+def test_free_space():
+    board = [
+        ["X","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+    ]
+
+    assert check_free_space(board, [1,0])
 
 ###############
 # place_piece #
 ###############
 
 # board is updated correctly
+def test_board_update():
+    board = [
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+    ]
+
+    piece_details = [[3,3], "queen", "d4", "White"]
+
+    expected_board = [
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","",[piece_details[1],piece_details[3],piece_details[2]],"","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+    ]
+
+    assert place_piece(board, piece_details[0], piece_details[1], piece_details[2], piece_details[3]) == expected_board
+    
 
 ############
 # captured #
